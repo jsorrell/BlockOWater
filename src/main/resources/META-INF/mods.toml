@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[28,)"
+#issueTrackerURL="http://my.issue.tracker/"
+
+[[mods]] #mandatory
+modId="blockowater"
+version="${file.jarVersion}"
+displayName="Block O' Water"
+#displayURL="http://example.com/"
+#logoFile="examplemod.png"
+authors="jsorrell"
+description='''
+Infinite water in a block.
+'''
+
+[[dependencies.blockowater]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.14.4]"
+    ordering="NONE"
+    side="BOTH"
