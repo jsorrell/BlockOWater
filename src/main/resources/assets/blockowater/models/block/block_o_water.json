@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "blockowater:block/block_o_water"
+    "all": "blockowater:blocks/block_o_water"
   }
 }

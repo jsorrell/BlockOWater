@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "blockowater:block/block_o_water"
+    "normal": {
+      "model": "blockowater:block_o_water"
     }
   }
 }

@@ -1,34 +1,32 @@
 package com.jsorrell.blockowater.common.tileentity;
 
 import com.jsorrell.blockowater.common.block.BlockOWater;
-import com.jsorrell.blockowater.common.core.BlockOWaterTileEntityTypes;
 import com.jsorrell.blockowater.common.util.InfiniteWaterTank;
-import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TileEntityBlockOWater extends TileEntity implements ITickableTileEntity, ICapabilityProvider {
+public class TileEntityBlockOWater extends TileEntity implements ITickable, ICapabilityProvider {
   public static final String NAME = BlockOWater.NAME;
   private static final int PUSH_COUNTER = 10; // Set by config
   private int tickCount = 0;
 
   protected InfiniteWaterTank tank = new InfiniteWaterTank();
-  private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
+  private final IFluidHandler holder = tank;
 
   public TileEntityBlockOWater() {
-    super(BlockOWaterTileEntityTypes.blockOWater);
+    super();
   }
 
   @Override
-  public void tick() {
+  public void update() {
     // If config says so
     if (true) {
       if (PUSH_COUNTER <= ++tickCount) {
@@ -38,17 +36,22 @@ public class TileEntityBlockOWater extends TileEntity implements ITickableTileEn
     }
   }
 
-  @Nonnull
   @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-    if (!this.removed && cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return holder.cast();
+  public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+    return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+  }
+
+  @Nullable
+  @Override
+  @SuppressWarnings("unchecked")
+  public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+    if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+      return (T) holder;
     }
-    return super.getCapability(cap, side);
+    return super.getCapability(capability, facing);
   }
 
   private void pushWater() {
     // TODO
   }
-
 }

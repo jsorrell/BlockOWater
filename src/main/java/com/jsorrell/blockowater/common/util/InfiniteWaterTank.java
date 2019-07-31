@@ -1,6 +1,6 @@
 package com.jsorrell.blockowater.common.util;
 
-import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
@@ -21,10 +21,8 @@ public class InfiniteWaterTank implements IFluidHandler {
   @Nullable
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
-    // FIXME Waiting on https://github.com/MinecraftForge/MinecraftForge/issues/5314
-    Fluid water = null; // FluidRegistry.WATER;
-    if (resource == null) {
-      return new FluidStack(water, Integer.MAX_VALUE);
+    if (resource.getFluid() == FluidRegistry.WATER) {
+      return new FluidStack(FluidRegistry.WATER, Integer.MAX_VALUE);
     }
     return null;
   }
@@ -36,13 +34,10 @@ public class InfiniteWaterTank implements IFluidHandler {
   }
 
   private static class TankProperties implements IFluidTankProperties {
-
     @Nullable
     @Override
     public FluidStack getContents() {
-      // FIXME Waiting on https://github.com/MinecraftForge/MinecraftForge/issues/5314
-      Fluid water = null; // FluidRegistry.WATER;
-      return new FluidStack(water, Integer.MAX_VALUE);
+      return new FluidStack(FluidRegistry.WATER, Integer.MAX_VALUE);
     }
 
     @Override
@@ -67,8 +62,7 @@ public class InfiniteWaterTank implements IFluidHandler {
 
     @Override
     public boolean canDrainFluidType(FluidStack fluidStack) {
-      // FIXME Waiting on https://github.com/MinecraftForge/MinecraftForge/issues/5314
-      return false;
+      return fluidStack.getFluid() == FluidRegistry.WATER;
     }
   }
 }

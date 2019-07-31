@@ -1,0 +1,8 @@
+[{
+  "modid": "blockowater",
+  "name": "Block O' Water",
+  "description": "Infinite water in a block.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "authorList": ["jsorrell"]
+}]

@@ -5,10 +5,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '2.3-SNAPSHOT', changing: true
     }
 }
-apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
@@ -39,53 +39,11 @@ def loadProperties() {
     logger.lifecycle "BUILDING VERSION: " + project.buildnumber
 }
 
-
 minecraft {
-    mappings channel: "${config.mcp_mappings_channel}", version: config.mcp_mappings_version
+    version = "${config.minecraft_version}-${config.forge_version}"
+    runDir = "run";
+    mappings = "${config.mcp_mappings_channel}_${config.mcp_mappings_version}"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-
-    runs {
-        client {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                blockowater {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                blockowater {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
-
-            mods {
-                blockowater {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
 }
 
 jar {
@@ -102,15 +60,8 @@ jar {
     }
 }
 
-dependencies {
-    // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
-    // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
-    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft([
-            group: 'net.minecraftforge',
-            name: 'forge',
-            version: "${config.minecraft_version}-${config.forge_version}"
-    ])
+// Fixes IntelliJ bug that prevents assets from working
+// https://stackoverflow.com/a/27624502
+sourceSets {
+    main { output.resourcesDir = output.classesDir }
 }
-
-
