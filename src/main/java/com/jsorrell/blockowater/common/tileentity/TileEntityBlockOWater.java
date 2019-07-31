@@ -1,7 +1,7 @@
 package com.jsorrell.blockowater.common.tileentity;
 
 import com.jsorrell.blockowater.common.block.BlockOWater;
-import com.jsorrell.blockowater.common.util.InfiniteWaterTank;
+import com.jsorrell.blockowater.common.util.InfiniteWaterSource;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -18,12 +18,7 @@ public class TileEntityBlockOWater extends TileEntity implements ITickable, ICap
   private static final int PUSH_COUNTER = 10; // Set by config
   private int tickCount = 0;
 
-  protected InfiniteWaterTank tank = new InfiniteWaterTank();
-  private final IFluidHandler holder = tank;
-
-  public TileEntityBlockOWater() {
-    super();
-  }
+  private static final IFluidHandler tank = new InfiniteWaterSource();
 
   @Override
   public void update() {
@@ -46,7 +41,7 @@ public class TileEntityBlockOWater extends TileEntity implements ITickable, ICap
   @SuppressWarnings("unchecked")
   public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
     if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return (T) holder;
+      return (T) tank;
     }
     return super.getCapability(capability, facing);
   }

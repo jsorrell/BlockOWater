@@ -7,22 +7,19 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 import javax.annotation.Nullable;
 
-public class InfiniteWaterTank implements IFluidHandler {
+public class InfiniteWaterSource implements IFluidHandler {
+
   @Override
   public IFluidTankProperties[] getTankProperties() {
     return new IFluidTankProperties[]{ new TankProperties() };
   }
 
-  @Override
-  public int fill(FluidStack resource, boolean doFill) {
-    return 0;
-  }
 
   @Nullable
   @Override
   public FluidStack drain(FluidStack resource, boolean doDrain) {
     if (resource.getFluid() == FluidRegistry.WATER) {
-      return new FluidStack(FluidRegistry.WATER, Integer.MAX_VALUE);
+      return resource;
     }
     return null;
   }
@@ -30,7 +27,13 @@ public class InfiniteWaterTank implements IFluidHandler {
   @Nullable
   @Override
   public FluidStack drain(int maxDrain, boolean doDrain) {
-    return null;
+    return new FluidStack(FluidRegistry.WATER, maxDrain);
+  }
+
+  // Doesn't accept fluids
+  @Override
+  public int fill(FluidStack resource, boolean doFill) {
+    return 0;
   }
 
   private static class TankProperties implements IFluidTankProperties {
