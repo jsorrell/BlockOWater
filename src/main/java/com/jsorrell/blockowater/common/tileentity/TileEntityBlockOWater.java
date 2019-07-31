@@ -2,11 +2,17 @@ package com.jsorrell.blockowater.common.tileentity;
 
 import com.jsorrell.blockowater.common.block.BlockOWater;
 import com.jsorrell.blockowater.common.util.InfiniteWaterSource;
+import net.minecraft.block.BlockCauldron;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
@@ -47,6 +53,22 @@ public class TileEntityBlockOWater extends TileEntity implements ITickable, ICap
   }
 
   private void pushWater() {
-    // TODO
+    if (this.world.isRemote) return;
+    for (EnumFacing direction : EnumFacing.VALUES) {
+      BlockPos tryPushPos = this.pos.offset(direction);
+      TileEntity tryPushTile = this.world.getTileEntity(tryPushPos);
+      if (tryPushTile != null) {
+        IFluidHandler fluidHandler = tryPushTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction.getOpposite());
+        if (fluidHandler != null) {
+          fluidHandler.fill(new FluidStack(FluidRegistry.WATER, Integer.MAX_VALUE), true);
+        }
+      } else {
+        IBlockState blockState = this.world.getBlockState(tryPushPos);
+        // Try to fill cauldron
+        if (blockState.getBlock() == Blocks.CAULDRON && blockState.getValue(BlockCauldron.LEVEL) < 3) {
+          this.world.setBlockState(tryPushPos, blockState.withProperty(BlockCauldron.LEVEL, 3));
+        }
+      }
+    }
   }
 }
