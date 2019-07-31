@@ -1,2 +1,5 @@
-  block.blockowater.block_o_water=Block O' Water
-  itemGroup.itemGroupBlockOWater=Block O' Water
+# Blocks
+tile.block_o_water.name=Block O' Water
+
+# ItemGroups
+itemGroup.itemGroupBlockOWater=Block O' Water
