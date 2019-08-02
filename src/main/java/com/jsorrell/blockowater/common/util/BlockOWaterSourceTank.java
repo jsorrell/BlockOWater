@@ -54,6 +54,11 @@ public class BlockOWaterSourceTank implements IFluidTank, IFluidHandler {
       // Divide rounding up
       int generationEvents = (TANK_BUFFER_TIME + ConfigSettings.waterGeneration.generationTimer - 1) / ConfigSettings.waterGeneration.generationTimer;
 
+      // Avoid overflow errors
+      if (Integer.MAX_VALUE / generationEvents < ConfigSettings.waterGeneration.generationAmount) {
+        return Integer.MAX_VALUE;
+      }
+
       size = ConfigSettings.waterGeneration.generationAmount * generationEvents;
     }
 
