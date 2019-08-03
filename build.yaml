@@ -1,0 +1,12 @@
+mod:
+  group: com.jsorrell.blockowater
+  basename: BlockOWater
+  name: "Block O' Water"
+  vendor: jsorrell
+  version: 1.0.0
+forge:
+  minecraftVersion: 1.12.2
+  forgeVersion: 14.23.5.2838
+  mcpMappings:
+    channel: snapshot
+    version: 20171003
