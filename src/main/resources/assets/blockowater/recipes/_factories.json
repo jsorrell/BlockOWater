@@ -1,0 +1,8 @@
+{
+  "ingredients": {
+    "fluid_stack": "com.jsorrell.blockowater.common.crafting.IngredientFluidStackFactory"
+  },
+  "recipes": {
+    "crafting_shaped": "com.jsorrell.blockowater.common.crafting.ShapedRecipeFactory"
+  }
+}

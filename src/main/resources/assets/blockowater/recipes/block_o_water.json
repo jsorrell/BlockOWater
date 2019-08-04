@@ -1,0 +1,26 @@
+{
+  "type": "blockowater:crafting_shaped",
+  "pattern": [
+    "ppp",
+    "bsb",
+    "ppp"
+  ],
+  "key": {
+    "p": {
+      "type": "forge:ore_dict",
+      "ore": "paneGlass"
+    },
+    "b": {
+      "type": "blockowater:fluid_stack",
+      "name": "water",
+      "amount": 1000
+    },
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "blockSlime"
+    }
+  },
+  "result": {
+    "item": "blockowater:block_o_water"
+  }
+}
