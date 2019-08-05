@@ -1,9 +1,9 @@
 
-import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension
-import org.yaml.snakeyaml.Yaml
 import java.io.FileReader
 import java.text.SimpleDateFormat
 import java.util.*
+import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension
+import org.yaml.snakeyaml.Yaml
 
 buildscript {
     repositories {
@@ -18,12 +18,10 @@ buildscript {
 }
 
 plugins {
-    application
     java
     maven
     idea
     eclipse
-    id("com.matthewprenger.cursegradle") version "1.3.0"
 }
 
 apply(plugin = "net.minecraftforge.gradle.forge")
@@ -50,9 +48,17 @@ configure<ForgeExtension> {
     runDir = "run";
     mappings = config.forge!!.mcpMappings!!.channel!! + "_" + config.forge!!.mcpMappings!!.version!!
 //    makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+
+    replaceIn("Values.java")
+    replace("@VERSION@", config.mod!!.version)
+    replace("@BUILD_NUMBER@", config.mod!!.buildNo)
+    replace("@MC_VERSION@", config.forge!!.minecraftVersion)
+    replace("@FORGE_VERSION@", config.forge!!.forgeVersion)
 }
 
+
 tasks.getByName<Jar>("jar") {
+    setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     manifest {
         attributes(mapOf(
                 "Specification-Title" to config.mod!!.name!!,
@@ -66,10 +72,6 @@ tasks.getByName<Jar>("jar") {
     }
 }
 
-// Fixes IntelliJ bug that prevents assets from working
-// https://stackoverflow.com/a/27624502
-sourceSets.getByName("main").output.resourcesDir = sourceSets.getByName("main").output.classesDirs.singleFile
-
 val processResources = tasks.getByName("processResources") as ProcessResources
 processResources.apply {
     inputs.property("version", config.mod!!.version!!)
@@ -77,10 +79,15 @@ processResources.apply {
 
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.getByName("main").resources.srcDirs) {
-        include("mcmod.info", "Values.java")
+        include("mcmod.info")
 
         // replace version and mcversion
         expand(mapOf("version" to config.mod!!.version!!, "mcversion" to config.forge!!.minecraftVersion!!))
+
+        // copy everything else, that's not the mcmod.info
+        from(sourceSets.getByName("main").resources.srcDirs) {
+            exclude("mcmod.info")
+        }
     }
 }
 
@@ -88,6 +95,7 @@ class BuildConfig() {
     var mod : Mod? = null
     class Mod() {
         var version : String? = null
+        var buildNo : String? = null
         var group : String? = null
         var basename : String? = null
         var vendor : String? = null
@@ -106,12 +114,12 @@ class BuildConfig() {
 }
 
 fun getBuildConfig() : BuildConfig {
-    return Yaml().loadAs(FileReader("build.yaml"), BuildConfig::class.java)
-}
+    val config = Yaml().loadAs(FileReader("build.yaml"), BuildConfig::class.java)
+    config.mod!!.buildNo = "DEV";
+    if (System.getenv().containsKey("BUILD_NUMBER")) {
+        config.mod!!.buildNo = System.getenv("BUILD_NUMBER")
+    }
+    logger.lifecycle("BUILDING VERSION: " + config.mod!!.buildNo)
 
-//    // grab buildNumber
-//    ext.buildnumber = "DEV" // this will be referenced as simply project.buildnumber from now on.
-//    if (System.getenv().BUILD_NUMBER)
-//        project.buildnumber = System.getenv().BUILD_NUMBER
-//    logger.lifecycle "BUILDING VERSION: " + project.buildnumber
-//}
+    return config
+}
