@@ -15,6 +15,7 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class BlockOWater extends BlockMod {
   public static final String NAME = "block_o_water";
@@ -23,6 +24,8 @@ public class BlockOWater extends BlockMod {
   public BlockOWater() {
     super(Material.ROCK, BlockOWater.NAME);
     itemBlock = new ItemBlockMod(this);
+    setHardness(1.5f);
+    setHarvestLevel("pickaxe", 1);
   }
 
   @Override
@@ -47,5 +50,10 @@ public class BlockOWater extends BlockMod {
       }
     }
     return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
+  }
+
+  @Override
+  public int quantityDropped(Random random) {
+    return super.quantityDropped(random);
   }
 }
