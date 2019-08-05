@@ -4,5 +4,6 @@
   "description": "Infinite water in a block.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "authorList": ["jsorrell"]
+  "authorList": ["jsorrell"],
+  "logoFile": "assets/blockowater/logo.png"
 }]
