@@ -41,6 +41,12 @@ java {
 }
 
 val sourceSets = the<JavaPluginConvention>().sourceSets
+
+// Fixes IntelliJ missing assets issue
+val mainOutput = File("build/main")
+sourceSets.getByName("main").java.outputDir = mainOutput
+sourceSets.getByName("main").output.resourcesDir = mainOutput
+
 val minecraft: ForgeExtension = extensions.getByType(ForgeExtension::class.java)
 
 configure<ForgeExtension> {
@@ -55,7 +61,6 @@ configure<ForgeExtension> {
     replace("@MC_VERSION@", config.forge!!.minecraftVersion)
     replace("@FORGE_VERSION@", config.forge!!.forgeVersion)
 }
-
 
 tasks.getByName<Jar>("jar") {
     setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE)
