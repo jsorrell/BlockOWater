@@ -1,6 +1,6 @@
 package com.jsorrell.blockowater.common.config;
 
-import com.jsorrell.blockowater.Values;
+import com.jsorrell.blockowater.BlockOWater;
 import com.jsorrell.blockowater.common.config.annotations.NoSync;
 import com.jsorrell.blockowater.common.util.ReflectionUtils;
 import net.minecraftforge.common.config.Config;
@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-@Config(modid = Values.MOD_ID, type = Config.Type.INSTANCE, category = "")
+@Config(modid = BlockOWater.MODID, type = Config.Type.INSTANCE, category = "")
 public final class ConfigSettings implements Serializable {
   @Config.Name("Generation")
   @Config.Comment("Config for how a Block O' Water generates water.")

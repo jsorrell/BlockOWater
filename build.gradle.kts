@@ -57,7 +57,7 @@ configure<ForgeExtension> {
     mappings = config.forge!!.mcpMappings!!.channel!! + "_" + config.forge!!.mcpMappings!!.version!!
 //    makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
-    replaceIn("Values.java")
+    replaceIn("BlockOWater.java")
     replace("@VERSION@", config.mod!!.version)
     replace("@BUILD_NUMBER@", config.mod!!.buildNo)
     replace("@MC_VERSION@", config.forge!!.minecraftVersion)

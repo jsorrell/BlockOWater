@@ -1,6 +1,6 @@
 package com.jsorrell.blockowater.client;
 
-import com.jsorrell.blockowater.Values;
+import com.jsorrell.blockowater.BlockOWater;
 import com.jsorrell.blockowater.common.ServerProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -24,7 +24,7 @@ public class ClientProxy extends ServerProxy {
 
   @Override
   public void registerItemRenderer(Item item, int meta, String id) {
-    ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(Values.MOD_ID + ":" + id, "inventory"));
+    ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(BlockOWater.MODID + ":" + id, "inventory"));
   }
 
   @Override

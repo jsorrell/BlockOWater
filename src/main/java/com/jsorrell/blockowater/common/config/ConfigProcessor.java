@@ -1,7 +1,6 @@
 package com.jsorrell.blockowater.common.config;
 
 import com.jsorrell.blockowater.BlockOWater;
-import com.jsorrell.blockowater.Values;
 import com.jsorrell.blockowater.common.network.BlockOWaterPacketHandler;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.config.Config;
@@ -28,17 +27,17 @@ public class ConfigProcessor {
   @SubscribeEvent
   @SuppressWarnings("unused")
   public void onConfigChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
-    if (!event.getModID().equals(Values.MOD_ID)) return;
+    if (!event.getModID().equals(BlockOWater.MODID)) return;
 
     // If we're a multiplayer client, we should not sync to ConfigSettings, which contains the server config.
     if (FMLCommonHandler.instance().getEffectiveSide() != Side.CLIENT || !event.isWorldRunning() || BlockOWater.proxy.isClientSinglePlayer()) {
-      ConfigManager.sync(Values.MOD_ID, Config.Type.INSTANCE);
+      ConfigManager.sync(BlockOWater.MODID, Config.Type.INSTANCE);
     } else {
       // HACK: Save and restore server settings
       Map<String, Object> map = ConfigSettings.getSettingsMap(true);
-      ConfigManager.sync(Values.MOD_ID, Config.Type.INSTANCE);
+      ConfigManager.sync(BlockOWater.MODID, Config.Type.INSTANCE);
       ConfigSettings.loadSettingsMap(map);
-      ConfigManager.sync(Values.MOD_ID, Config.Type.INSTANCE);
+      ConfigManager.sync(BlockOWater.MODID, Config.Type.INSTANCE);
     }
   }
 }

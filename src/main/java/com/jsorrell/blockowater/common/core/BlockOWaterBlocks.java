@@ -1,7 +1,6 @@
 package com.jsorrell.blockowater.common.core;
 
-import com.jsorrell.blockowater.Values;
-import com.jsorrell.blockowater.common.block.BlockOWater;
+import com.jsorrell.blockowater.BlockOWater;
 import com.jsorrell.blockowater.common.tileentity.TileEntityBlockOWater;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -15,21 +14,21 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@ObjectHolder(Values.MOD_ID)
+@ObjectHolder(com.jsorrell.blockowater.BlockOWater.MODID)
 public class BlockOWaterBlocks {
-  @ObjectHolder(BlockOWater.NAME)
-  public static BlockOWater blockOWater;
-  @ObjectHolder(BlockOWater.NAME)
+  @ObjectHolder(com.jsorrell.blockowater.common.block.BlockOWater.NAME)
+  public static com.jsorrell.blockowater.common.block.BlockOWater blockOWater;
+  @ObjectHolder(com.jsorrell.blockowater.common.block.BlockOWater.NAME)
   public static ItemBlock blockOWaterItemBlock;
 
-  @Mod.EventBusSubscriber(modid = Values.MOD_ID)
+  @Mod.EventBusSubscriber(modid = BlockOWater.MODID)
   public static class Registration {
     @SubscribeEvent
     public static void registerBlocks(final RegistryEvent.Register<Block> event) {
       IForgeRegistry<Block> blockRegistry = event.getRegistry();
       blockRegistry.register(new com.jsorrell.blockowater.common.block.BlockOWater());
       // Register tile entities - In later Forge these will have their own RegistryEvent
-      GameRegistry.registerTileEntity(TileEntityBlockOWater.class, new ResourceLocation(Values.MOD_ID, TileEntityBlockOWater.NAME));
+      GameRegistry.registerTileEntity(TileEntityBlockOWater.class, new ResourceLocation(BlockOWater.MODID, TileEntityBlockOWater.NAME));
     }
 
     @SubscribeEvent

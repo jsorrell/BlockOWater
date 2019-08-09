@@ -12,11 +12,19 @@ import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 
-@Mod(modid = Values.MOD_ID, name = Values.MOD_NAME, version = Values.MOD_VERSION, useMetadata = true)
+@Mod(modid = BlockOWater.MODID, name = BlockOWater.NAME, version = BlockOWater.VERSION, useMetadata = true)
 public class BlockOWater {
+  // Mod info
+  public static final String MODID = "blockowater";
+  public static final String NAME = "Block O' Water";
+  public static final String VERSION = "@VERSION@";
+  public static final String BUILD_NUMBER = "@BUILD_NUMBER@";
+  public static final String MC_VERSION = "@MC_VERSION@";
+  public static final String FORGE_VERSION = "@FORGE_VERSION@";
+
   public static final Logger logger = getLogger();
 
-  @Mod.Instance(Values.MOD_ID)
+  @Mod.Instance(BlockOWater.MODID)
   public static BlockOWater instance;
 
   @SidedProxy(serverSide = "com.jsorrell.blockowater.common.ServerProxy", clientSide = "com.jsorrell.blockowater.client.ClientProxy")
@@ -24,7 +32,7 @@ public class BlockOWater {
 
   @Nonnull
   private static Logger getLogger() {
-    Logger logger = LogManager.getLogger(Values.MOD_NAME);
+    Logger logger = LogManager.getLogger(BlockOWater.NAME);
     if (logger == null) {
       throw new NullPointerException("failed to acquire logger");
     }
