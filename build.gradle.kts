@@ -7,7 +7,7 @@ import org.yaml.snakeyaml.Yaml
 
 buildscript {
     repositories {
-        maven { setUrl("https://files.minecraftforge.net/maven") }
+        maven { url = uri("https://files.minecraftforge.net/maven") }
         jcenter()
         mavenCentral()
     }
@@ -46,8 +46,6 @@ val sourceSets = the<JavaPluginConvention>().sourceSets
 val mainOutput = File("build/main")
 sourceSets.getByName("main").java.outputDir = mainOutput
 sourceSets.getByName("main").output.resourcesDir = mainOutput
-
-val minecraft: ForgeExtension = extensions.getByType(ForgeExtension::class.java)
 
 configure<ForgeExtension> {
     version = config.forge!!.minecraftVersion!! + "-" + config.forge!!.forgeVersion!!
