@@ -39,7 +39,7 @@ public class TileEntityBlockOWater extends TileEntity implements ITickable, ICap
     // Updated when moved with something like Mekanism Cardboard Box
     if (this.pos != this.previousPos) {
       this.previousPos = this.pos;
-      biomeValid = checkBiomeValid();
+      biomeValid = checkConditionsValid();
     }
 
     if (!biomeValid) return;
@@ -54,13 +54,15 @@ public class TileEntityBlockOWater extends TileEntity implements ITickable, ICap
     }
   }
 
-  private boolean checkBiomeValid() {
+  private boolean checkConditionsValid() {
     if (!ConfigSettings.workingConditions.requiresWaterBiome && ConfigSettings.workingConditions.worksInNether) {
       return true;
     }
 
-    Biome biome = this.world.getBiome(this.pos);
+    return TileEntityBlockOWater.checkBiomeValid(this.world.getBiome(this.pos));
+  }
 
+  static boolean checkBiomeValid(Biome biome) {
     if (ConfigSettings.workingConditions.requiresWaterBiome) {
       return BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) || BiomeDictionary.hasType(biome, BiomeDictionary.Type.RIVER);
     }
@@ -69,7 +71,7 @@ public class TileEntityBlockOWater extends TileEntity implements ITickable, ICap
       return !BiomeDictionary.hasType(biome, BiomeDictionary.Type.NETHER);
     }
 
-    throw new RuntimeException("Should never get here.");
+    return true;
   }
 
   @Override

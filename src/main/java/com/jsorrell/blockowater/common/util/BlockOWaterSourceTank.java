@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
  * The tank should only provide enough buffer for pipes that extract slowly.
  */
 public class BlockOWaterSourceTank implements IFluidTank, IFluidHandler {
-  private static final int TANK_BUFFER_TIME = 20;
+  public static final int TANK_BUFFER_TIME = 20;
   private int fillCounter = 0;
   private FluidStack fluid;
   private TileEntity tile;
@@ -47,6 +47,10 @@ public class BlockOWaterSourceTank implements IFluidTank, IFluidHandler {
 
   @Override
   public int getCapacity() {
+    return BlockOWaterSourceTank.calculateCapacity();
+  }
+
+  static int calculateCapacity() {
     int size;
     if (TANK_BUFFER_TIME <= ConfigSettings.waterGeneration.generationTimer) {
       size = ConfigSettings.waterGeneration.generationAmount;
