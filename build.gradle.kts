@@ -40,6 +40,10 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter:5.5.1")
+}
+
 val sourceSets = the<JavaPluginConvention>().sourceSets
 
 // Fixes IntelliJ missing assets issue
@@ -61,7 +65,7 @@ configure<ForgeExtension> {
 }
 
 tasks.getByName<Jar>("jar") {
-    setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         attributes(mapOf(
                 "Specification-Title" to config.mod!!.name!!,
@@ -72,6 +76,13 @@ tasks.getByName<Jar>("jar") {
                 "Implementation-Vendor" to config.mod!!.vendor!!,
                 "Implementation-Timestamp" to SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(Date())
         ))
+    }
+}
+
+tasks.getByName<Test>("test") {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
     }
 }
 
