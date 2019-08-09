@@ -9,8 +9,8 @@ public class ServerProxy {
     return null;
   }
 
-  public boolean isClientIntegratedServerRunning() {
-    return false;
+  public boolean isClientSinglePlayer() {
+    throw new RuntimeException("isClientSinglePlayer called from server.");
   }
 
   public void registerItemRenderer(Item item, int meta, String id) { }

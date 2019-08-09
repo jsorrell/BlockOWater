@@ -12,6 +12,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
+import java.util.Map;
+
 public class ConfigProcessor {
   public static final ConfigProcessor INSTANCE = new ConfigProcessor();
 
@@ -29,7 +31,13 @@ public class ConfigProcessor {
     if (!event.getModID().equals(Values.MOD_ID)) return;
 
     // If we're a multiplayer client, we should not sync to ConfigSettings, which contains the server config.
-    if (FMLCommonHandler.instance().getEffectiveSide() != Side.CLIENT || BlockOWater.proxy.isClientIntegratedServerRunning()) {
+    if (FMLCommonHandler.instance().getEffectiveSide() != Side.CLIENT || !event.isWorldRunning() || BlockOWater.proxy.isClientSinglePlayer()) {
+      ConfigManager.sync(Values.MOD_ID, Config.Type.INSTANCE);
+    } else {
+      // HACK: Save and restore server settings
+      Map<String, Object> map = ConfigSettings.getSettingsMap(true);
+      ConfigManager.sync(Values.MOD_ID, Config.Type.INSTANCE);
+      ConfigSettings.loadSettingsMap(map);
       ConfigManager.sync(Values.MOD_ID, Config.Type.INSTANCE);
     }
   }

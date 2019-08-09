@@ -1,7 +1,6 @@
 package com.jsorrell.blockowater.common.config;
 
 import com.jsorrell.blockowater.BlockOWater;
-import com.sun.jna.platform.unix.X11;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -57,7 +56,7 @@ public class PacketConfigSync implements IMessage {
       if (message.fieldMap == null) {
         BlockOWater.logger.warn("fieldMap null in " + PacketConfigSync.class.getName());
       } else {
-        ConfigSettings.loadFieldMap(message.fieldMap);
+        ConfigSettings.loadSettingsMap(message.fieldMap);
       }
 
       return null;

@@ -29,6 +29,12 @@ public final class ConfigSettings implements Serializable {
   @Config.LangKey("config.conditions")
   public static WorkingConditions workingConditions = new WorkingConditions();
 
+  @Config.Name("Client")
+  @Config.Comment("Client-only config settings.")
+  @Config.LangKey("config.client")
+  @NoSync
+  public static Client client = new Client();
+
   /* Categories */
   public static class WaterGeneration {
     @Config.Name("Generation Amount")
@@ -78,15 +84,29 @@ public final class ConfigSettings implements Serializable {
     public Boolean worksInNether = true;
   }
 
+  public static class Client {
+    @Config.Name("Tooltips")
+    @Config.LangKey("config.client.tooltips")
+    public Tooltips tooltips = new Tooltips();
+
+    public static class Tooltips {
+      @Config.Name("Enabled")
+      public Boolean enabled = true;
+
+      @Config.Name("Require Sneaking")
+      public Boolean requireSneaking = true;
+    }
+  }
+
   /* Serialization */
 
-  public static HashMap<String, Serializable> getSettingsMap(boolean excludeNoSync) {
-    HashMap<String, Serializable> map = new HashMap<>();
+  public static HashMap<String, Object> getSettingsMap(boolean excludeNoSync) {
+    HashMap<String, Object> map = new HashMap<>();
     addObjectToMap(map, ConfigSettings.class, null, "", excludeNoSync);
     return map;
   }
 
-  private static void addObjectToMap(Map<String, Serializable> map, Class clazz, @Nullable Object obj, String prefix, boolean excludeNoSync) {
+  private static void addObjectToMap(Map<String, Object> map, Class clazz, @Nullable Object obj, String prefix, boolean excludeNoSync) {
     for (Field field : clazz.getDeclaredFields()) {
       // Don't serialize fields with NoSync annotation when excludeNoSync true
       if (excludeNoSync && field.isAnnotationPresent(NoSync.class)) continue;
@@ -102,7 +122,7 @@ public final class ConfigSettings implements Serializable {
     }
   }
 
-  public static void loadFieldMap(Map<String, Object> map) {
+  public static void loadSettingsMap(Map<String, Object> map) {
     for (String fieldName : map.keySet()) {
       loadField(ConfigSettings.class, fieldName, null, map.get(fieldName));
     }

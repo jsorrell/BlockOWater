@@ -17,5 +17,10 @@ config.pushing.tooltip=Config for how a Block O' Water pushes to adjacent blocks
 config.conditions=Working Conditions
 config.conditions.tooltip=Config for the conditions a Block O' Water works in.
 
+config.client=Client
+config.client.tooltip=Config for client-only settings.
+config.client.tooltips=Tooltips
+config.client.tooltips.tooltip=Config for the tooltips that appear on a Block O' Water.
+
 # ItemGroups
 itemGroup.itemGroupBlockOWater=Block O' Water

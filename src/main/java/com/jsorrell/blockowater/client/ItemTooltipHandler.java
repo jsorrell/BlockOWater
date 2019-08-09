@@ -18,17 +18,19 @@ public class ItemTooltipHandler {
   @SubscribeEvent
   @SuppressWarnings("unused")
   public void ItemTooltipEvent(ItemTooltipEvent event) {
-    if (event.getItemStack().getItem() == BlockOWaterBlocks.blockOWaterItemBlock) {
-      if (isPressingSneak()) {
-        if (ConfigSettings.pushConfig.canPush) {
-          event.getToolTip().add(TextFormatting.GREEN + I18n.format("tooltip.blockOWater.canPush"));
-        } else {
-          event.getToolTip().add(TextFormatting.RED + I18n.format("tooltip.blockOWater.cantPush"));
-        }
-        if (ConfigSettings.workingConditions.requiresWaterBiome) {
-          event.getToolTip().add(TextFormatting.LIGHT_PURPLE + I18n.format("tooltip.blockOWater.requiresWaterBiome"));
-        } else if (!ConfigSettings.workingConditions.worksInNether) {
-          event.getToolTip().add(TextFormatting.LIGHT_PURPLE + I18n.format("tooltip.blockOWater.netherDisabled"));
+    if (ConfigSettings.client.tooltips.enabled) {
+      if (event.getItemStack().getItem() == BlockOWaterBlocks.blockOWaterItemBlock) {
+        if (!ConfigSettings.client.tooltips.requireSneaking || isPressingSneak()) {
+          if (ConfigSettings.pushConfig.canPush) {
+            event.getToolTip().add(TextFormatting.GREEN + I18n.format("tooltip.blockOWater.canPush"));
+          } else {
+            event.getToolTip().add(TextFormatting.RED + I18n.format("tooltip.blockOWater.cantPush"));
+          }
+          if (ConfigSettings.workingConditions.requiresWaterBiome) {
+            event.getToolTip().add(TextFormatting.LIGHT_PURPLE + I18n.format("tooltip.blockOWater.requiresWaterBiome"));
+          } else if (!ConfigSettings.workingConditions.worksInNether) {
+            event.getToolTip().add(TextFormatting.LIGHT_PURPLE + I18n.format("tooltip.blockOWater.netherDisabled"));
+          }
         }
       }
     }

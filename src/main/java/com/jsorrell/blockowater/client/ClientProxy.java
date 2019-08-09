@@ -18,8 +18,8 @@ public class ClientProxy extends ServerProxy {
   }
 
   @Override
-  public boolean isClientIntegratedServerRunning() {
-    return Minecraft.getMinecraft().isIntegratedServerRunning();
+  public boolean isClientSinglePlayer() {
+    return Minecraft.getMinecraft().isSingleplayer();
   }
 
   @Override
@@ -29,7 +29,6 @@ public class ClientProxy extends ServerProxy {
 
   @Override
   public void init() {
-    System.out.println("ClientInit");
     MinecraftForge.EVENT_BUS.register(ItemTooltipHandler.INSTANCE);
   }
 }
