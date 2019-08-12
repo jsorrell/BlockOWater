@@ -12,7 +12,12 @@ import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 
-@Mod(modid = BlockOWater.MODID, name = BlockOWater.NAME, version = BlockOWater.VERSION, useMetadata = true)
+@Mod(
+  modid = BlockOWater.MODID,
+  name = BlockOWater.NAME,
+  version = BlockOWater.VERSION,
+  useMetadata = true,
+  acceptedMinecraftVersions = BlockOWater.MC_VERSION)
 public class BlockOWater {
   // Mod info
   public static final String MODID = "blockowater";
