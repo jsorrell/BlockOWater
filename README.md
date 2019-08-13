@@ -1,4 +1,4 @@
-Block O' Water ![CurseForge Badge][curseforgebadge] [![Build Status][travisbadge]][travislink]
+Block O' Water [![Build Status][travisbadge]][travislink] [![CurseForge Badge][curseforgebadge]][curseforgelink]
 ---------------------------------------------------------------------------
 
 <img src="src/main/resources/assets/blockowater/logo.png" alt="Block O' Water" width="200"/>
@@ -37,5 +37,6 @@ Please submit an issue describing any bugs or feature requests.
 All code and images are licensed under the [GNU Lesser General Public License v3.0](LICENSE.txt).
 
 [curseforgebadge]: https://cf.way2muchnoise.eu/title/333885.svg "Download Block O' Water"
+[curseforgelink]: https://www.curseforge.com/minecraft/mc-mods/block-o-water
 [travisbadge]: https://travis-ci.org/jsorrell/BlockOWater.svg?branch=1.12 "Build Status"
 [travislink]: https://travis-ci.org/jsorrell/BlockOWater
