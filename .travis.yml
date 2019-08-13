@@ -1,24 +1,33 @@
 dist: trusty
 language: java
 jdk:
-  - oraclejdk8
-  - openjdk8
-
+- oraclejdk8
+- openjdk8
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
-  - rm -f  $HOME/.gradle/caches/minecraft/deobfedDeps/providedDummy.jar
-  - rm -f  $HOME/.gradle/caches/minecraft/deobfedDeps/compileDummy.jar
-
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f  $HOME/.gradle/caches/minecraft/deobfedDeps/providedDummy.jar
+- rm -f  $HOME/.gradle/caches/minecraft/deobfedDeps/compileDummy.jar
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
 install:
-  - ./gradlew build
+- "./gradlew build"
 script:
-  - ./gradlew test
-
+- "./gradlew test"
 notifications:
   email: false
+before_deploy:
+- export FILE_TO_UPLOAD=$(find build/libs -type f -name "BlockOWater-*.jar" -not -name "*-sources.jar")
+deploy:
+  provider: releases
+  api_key:
+    secure: EDHJq+2sQbYKiUMru9TxZOXNOGl3uqPjzusgBap4PYGCllqdWO1pEAPa5cCq1UslruhVji8SWlX4aVDy86jIiKEwE5FKZrpJcfwutGo5l76ox5aHgK+Uf3JXtNUVqKObNQ2bIwWxhUpJdoAYoGiRGt9zxjcJ0paP/oIu2hXvGCwnVbPx6inBma+QGUTIj8Bk1sIVve0HimqO/riF8aw+CYw7A5UGKIWLYB8zYL2jVHaCmHkknkJYmNkNLJUBugwNlOgGEdcjouRH7LAoIJSaU+CP4sEMMrfpR+ZuKKwm2n2IDR/Sp8a2NHh/xJTPv4q0NYQDhy3vD07/uh6mhDJsgojMebxwawffNjnJiFGge1TYZJDTZqniVbPBYQOoDSERbJKy6z+Hyflw8tXQMmDMLfUBNXv64Z2XYfhluynvZr7HNkJrB4K1+foA8e3s9LoPDUJXJ4qdaOilCTI3OMc7ZkuVBZSaJea9Y+K4duQHo/knZoztdx0w14vr/OoF3i6YoqxuzwJsF9yGDLayPpBZrh+mIAl6hqiwk6Sje9/ycKJxR4V+J7bM7vjPAxwmluOYSTGj3v9Cp8ShIZFWrOfDl3ZYhjSWSnwkiAtTAsgwsKn3pSj4sTODfMcxOji57dUgDziVvweCtSZl31//Wyy7gsnRIY4lMEHdnT7G7kZxwr4=
+  file_glob: true
+  file: "${FILE_TO_UPLOAD}"
+  skip_cleanup: true
+  on:
+    repo: jsorrell/BlockOWater
+    branch: '1.12'
+    tags: true
