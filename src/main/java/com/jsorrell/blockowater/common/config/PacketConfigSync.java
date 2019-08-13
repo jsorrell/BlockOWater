@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.io.*;
+import java.util.Collections;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
@@ -56,7 +57,11 @@ public class PacketConfigSync implements IMessage {
       if (message.fieldMap == null) {
         BlockOWater.logger.warn("fieldMap null in " + PacketConfigSync.class.getName());
       } else {
-        ConfigSettings.loadSettingsMap(message.fieldMap);
+        ConfigProcessor.INSTANCE.serverConfig = Collections.unmodifiableMap(message.fieldMap);
+        if (ConfigProcessor.INSTANCE.clientConfig == null) {
+          ConfigProcessor.INSTANCE.clientConfig = Collections.unmodifiableMap(ConfigSettings.getSettingsMap(true));
+        }
+        ConfigSettings.loadSettingsMap(ConfigProcessor.INSTANCE.serverConfig);
       }
 
       return null;
