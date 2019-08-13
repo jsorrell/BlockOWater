@@ -36,7 +36,7 @@ Please submit an issue describing any bugs or feature requests.
 ### License
 All code and images are licensed under the [GNU Lesser General Public License v3.0](LICENSE.txt).
 
-[curseforgebadge]: https://cf.way2muchnoise.eu/title/333885.svg "Download Block O' Water"
+[curseforgebadge]: http://cf.way2muchnoise.eu/title/333885.svg "Download Block O' Water"
 [curseforgelink]: https://www.curseforge.com/minecraft/mc-mods/block-o-water
 [travisbadge]: https://travis-ci.org/jsorrell/BlockOWater.svg?branch=1.12 "Build Status"
 [travislink]: https://travis-ci.org/jsorrell/BlockOWater
