@@ -4,10 +4,10 @@ mod:
   name: "Block O' Water"
   vendor: jsorrell
   # See https://mcforge.readthedocs.io/en/latest/conventions/versioning/
-  version: 1.12.2-1.0.0.0
+  version: 1.12.2-1.0.0.1
 forge:
   minecraftVersion: 1.12.2
-  forgeVersion: 14.23.5.2838
+  forgeVersion: 14.23.5.2847
   mcpMappings:
     channel: snapshot
     version: 20171003
